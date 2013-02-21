@@ -26,7 +26,11 @@
             <td><%= flight.miles %></td>
             <td><%= flight.duration %> minutes</td>
             <td><%= flight.seats %></td>
-            <td><a class="btn btn-success">Book Now</a></td>
+            <% if session[:user_id] %>
+              <td><a class="btn btn-success">Book Now</a></td>
+            <% else %>
+              <td>Sign Up!</td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

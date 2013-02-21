@@ -1,4 +1,14 @@
 class UsersController < ApplicationController
+
+  before_filter :authorize_user, :only => [:show, :edit, :update, :destroy]
+
+  def authorize_user
+    @user = User.find(params[:id])
+    if @user.id != session[:user_id]
+      redirect_to root_url, notice: "Nice Try"
+    end
+  end
+
   # GET /users
   # GET /users.json
   def index

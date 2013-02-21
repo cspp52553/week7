@@ -42,8 +42,14 @@
           <ul class="nav pull-right">
             <li><a href="/airports.html">Cities</a></li>
             <li><a href="/support.html">Customer Support</a></li>
-            <li><a href="/profile.html">My Profile</a></li>
-            <li><a href="#about">Logout</a></li>
+
+            <% if session[:user_id] %>
+              <li><%= link_to "My Profile", user_url(session[:user_id]) %></li>
+              <li><%= link_to "Sign Out", sign_out_url %></li>
+            <% else %>
+              <li><%= link_to "Sign Me Up!", new_user_url %></li>
+              <li><%= link_to "Sign In", sign_in_url %></li>
+            <% end %>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -52,6 +58,7 @@
 
   <div class="container">
 
+    <%= notice %>
     <%= yield %>
 
     <hr>
