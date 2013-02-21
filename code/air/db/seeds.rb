@@ -13,6 +13,22 @@ mileage_chart = {
 }
 
 100.times do
-  # TODO: Add a random flight to the schedule
+  departure_code, arrival_code = airports.sample(2)
+
+  Flight.create number: "#{rand(100..999)}",
+      departure_airport: departure_code,
+      departs_at: Time.now.beginning_of_day + rand(24.hours),
+      arrival_airport: arrival_code,
+      seats: rand(0..60)
 
 end
+
+
+
+
+
+
+
+
+
+
