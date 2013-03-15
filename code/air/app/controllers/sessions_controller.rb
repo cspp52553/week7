@@ -3,16 +3,18 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by_name(params[:name])
-    if user.present?
-      if user.authenticate(params[:password])
-        session[:user_id] = user.id
-        redirect_to root_url
-        return
-      end
+    data = request.env["omniauth.auth"]
+    logger.info data['provider']
+    logger.info data['uid']
+    logger.info data['info']['nickname']
+
+    user = User.find_by_name(data['info']['nickname'])
+    if user.blank?
+      user = User.create name: data['info']['nickname']
     end
 
-    redirect_to sign_in_url, notice: "Nice try!"
+    session[:user_id] = user.id
+    redirect_to root_url
   end
 
   def destroy
